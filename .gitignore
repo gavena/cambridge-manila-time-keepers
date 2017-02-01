@@ -1,0 +1,6 @@
+node_modules/
+.gitignore/
+dist/
+app/public/js/
+npm-debug.log
+npm-debug.log.4216710364

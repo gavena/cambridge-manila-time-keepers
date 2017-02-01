@@ -1,0 +1,18 @@
+image: node:latest
+
+stages:
+  - build
+  - deploy
+
+build_job:
+  stage: build
+  script:
+  - npm install
+
+deploy_job:
+  stage: deploy
+  script:
+  - node index.js
+  environment:
+    name: dev
+    url: http://10.240.60.207:5000
