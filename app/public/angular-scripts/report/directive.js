@@ -6,8 +6,7 @@
             restrict: "A",
             link: (scope, elem) => {
                 elem.click(() => {
-                    //const x = '/report/download?year='+scope.selectedYear+'&month='+scope.selectedMonth;
-                    $window.location = '/report/download?year='+scope.selectedYear+'&month='+scope.selectedMonth;
+                    $window.location = '/report/download/'+scope.selectedYear+'/'+scope.selectedMonth;
                 });
             }
         };

@@ -34,6 +34,13 @@ const editableDtrSchema = new mongoose.Schema({
     total_late : Number,
     total_undertime : Number,
     total_work_hours : Number,
+    overtime_weekdays: String,
+    overtime_weekends: String,
+    regular_holiday: String,
+    special_holiday: String,
+    night_differentials: String,
+    lwop_hours: String,
+    tardiness_hours: String,
     late_count : Number,
     undertime_count : Number
 });
@@ -191,7 +198,7 @@ editableDtrSchema.methods.convert = function convert(data, callback) {
           this.model('editable_dtr').update({_id : dtr._id}, record, function(err, res){
           return callback(null, res);
         })
-      });     
+      });
     });
   });
 }
@@ -220,7 +227,7 @@ function getGroupByDays(entries, zoneName){
     for(var entry of entries){
       var convertedDate = moment(entry).utcOffset(zoneName);
       var momentObj = convertedDate.toObject();
-      
+
       if(!groupByDays[momentObj.date]){
           groupByDays[momentObj.date] = [];
       }
@@ -257,7 +264,7 @@ function getConvertedDates(entries, shift){
 function getLateDuration(firstIn, shift){
   var shiftStart = shift.start;
   var startTimeMoment = moment(firstIn).hour(shiftStart.getHours()).minute(shiftStart.getMinutes());
-  
+
   if(shift.hours_flex){
     startTimeMoment = startTimeMoment.add(shift.hours_flex, 'hours');
   }
@@ -282,7 +289,7 @@ function getUndertimeDuration(lastOut, duration, shift) {
   } else if(duration < eightHours){
     undertimeDuration = eightHours - duration;
   }
-  
+
   console.log(duration);
   console.log(endTimeMoment.toString());
   console.log(lastOut.toString());
