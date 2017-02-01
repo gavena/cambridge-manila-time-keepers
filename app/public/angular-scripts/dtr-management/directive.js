@@ -24,7 +24,7 @@
             restrict: "A",
             link: (scope, elem) => {
                 elem.click(() => {
-                    $window.location = "/dtr-management/edit/" + scope.details.username + "/" + scope.details.month + "/" + scope.details.year;
+                    $window.location = "/dtr-management/edit/" + scope.details.username + "/" + scope.details.year + "/" + scope.details.month;
                 });
             }
         };
@@ -67,70 +67,39 @@
                 restrict: "A",
                 link: (scope, elem) => {
                     elem.click(() => {
-                        if (scope.details.month > 0 && scope.details.month !== 1) {
-                            scope.details.month = scope.details.month - 1;
-                        } else {
-                            scope.details.year = scope.details.year - 1;
-                            scope.details.month = 12;
-                        }
-                        scope.details.description = Calendar.getMonthString(scope.details.month - 1) + " " + scope.details.year;
-                        if (scope.details.month === scope.details.currentMonth &&
-                            scope.details.year === scope.details.currentYear) {
-                            DtrManagement.getByDtr({
-                                username: scope.details.username,
-                                month: String(scope.details.month),
-                                year: String(scope.details.year)
-                            }).then((response) => {
-                                if (response.data.success) {
-                                    if (typeof response.data.result !== 'undefined') {
-                                        scope.currentDtr = true;
-                                        scope.details.days = Calendar.getDays(scope.details.year, scope.details.month);
-                                        scope.details.dtr = response.data.result.dates;
-                                        scope.details = Calendar.formatDtr(scope.details);
-                                        scope.hasData = true;
-                                        scope.showButton = false;
-                                    } else {
-                                        scope.showButton = false;
-                                        scope.hasData = false;
-                                    }
-                                }
-                            });
+                        var previousMonth = Calendar.getPreviousMonth(scope.details.currentPageMonth);
+                        scope.details.month = previousMonth.getMonth() + 1;  // add 1 to match the data on mongodb
+                        scope.details.year = previousMonth.getFullYear();
+                        scope.details.currentPageMonth = previousMonth;
 
-                        } else {
-                            DtrManagement.getApprovedDtrByMonthAndYear({
-                                username: scope.details.username,
-                                month: String(scope.details.month),
-                                year: String(scope.details.year)
-                            }).then((response) => {
-                               scope.showButton = false;
-                               if (response.data.success) {
-                                   if (typeof response.data.result !== 'undefined') {
-                                        scope.currentDtr  = false;
-                                        scope.hasData = true;
-                                        scope.showButton = false;
+                        scope.details.description = Calendar.getMonthYearString(previousMonth);
 
-                                        if (scope.details.month === scope.details.currentMonth - 1 ){
-                                            scope.showButton = !(response.data.result.status === 'APPROVED');
-                                        }
-                                        scope.details.days = Calendar.getDays(scope.details.year, scope.details.month);
+                        DtrManagement.getEditableDtr({
+                            username: 'cemanalo',
+                            month: String(scope.details.month),
+                            year: String(scope.details.year)
+                        }).then((response) => {
+                          scope.showButton = false;
 
-                                        scope.details.dtr = response.data.result.changes;
-                                        scope.details = Calendar.formatApprovedDtr(scope.details);
+                            if (response.data.success && response.data.result) {
+                              
+                                var result = response.data.result;
+                                console.log(response.data.result);
+                                scope.currentDtr  = true;
+                                scope.hasData = true;
+                                scope.showButton = true;
 
-                                        scope.oldDtr.days = Calendar.getDays(scope.details.year, scope.details.month);
-                                        scope.oldDtr.year = scope.details.year;
-                                        scope.oldDtr.month = scope.details.month;
-                                        scope.oldDtr.dtr = response.data.result.dates;
-                                        scope.oldDtr = Calendar.formatDtr(scope.oldDtr);
-
-                                    } else {
-                                        scope.hasData = false;
-                                    }
-                                } else {
-                                    scope.hasData = false;
-                                }
-                            });
-                        }
+                                scope.details.days = Calendar.getDays(scope.details.year, scope.details.month);
+                                scope.details.dtr = result.convertedDates;
+                                scope.details = Calendar.formatDtr(scope.details);
+                                scope.details.totalWorkHours = Calendar.getHoursDisplay(result.total_work_hours);
+                                scope.details.totalLwopHours = Calendar.getHoursDisplay(result.total_late + result.total_undertime);
+                                scope.details.lateCount = result.late_count;
+                                scope.details.undertimeCount = result.undertime_count;
+                            } else {
+                               scope.hasData = false;
+                           }
+                        });
                         scope.$apply();
                     });
                 }
@@ -146,67 +115,39 @@
                 restrict: "A",
                 link: (scope, elem) => {
                     elem.click(() => {
-                        if (scope.details.month < 12) {
-                            scope.details.month = scope.details.month + 1;
-                        } else {
-                            scope.details.year = scope.details.year + 1;
-                            scope.details.month = 1;
-                        }
+                        var nextMonth = Calendar.getNextMonth(scope.details.currentPageMonth);
+                        scope.details.month = nextMonth.getMonth() + 1;  // add 1 to match the data on mongodb
+                        scope.details.year = nextMonth.getFullYear();
+                        scope.details.currentPageMonth = nextMonth;
 
-                        scope.details.description = Calendar.getMonthString(scope.details.month - 1) + " " + scope.details.year;
-                        if (scope.details.month === scope.details.currentMonth  &&
-                            scope.details.year === scope.details.currentYear) {
-                            DtrManagement.getByDtr({
-                                username: scope.details.username,
-                                month: String(scope.details.month),
-                                year: String(scope.details.year)
-                            }).then((response) => {
-                                if (response.data.success) {
-                                  scope.showButton = false;
-                                    if (typeof response.data.result !== 'undefined') {
-                                        scope.showButton = false;
-                                        scope.currentDtr = true;
-                                        scope.details.days = Calendar.getDays(scope.details.year, scope.details.month);
-                                        scope.details.dtr = response.data.result.dates;
-                                        scope.details = Calendar.formatDtr(scope.details);
-                                        scope.hasData = true;
-                                    } else {
-                                        scope.hasData = false;
-                                    }
-                                }
+                        scope.details.description = Calendar.getMonthYearString(nextMonth);
 
-                            });
-                        } else {
-                            DtrManagement.getApprovedDtrByMonthAndYear({
-                                username: scope.details.username,
-                                month: String(scope.details.month),
-                                year: String(scope.details.year)
-                            }).then((response) => {
-                                scope.showButton = false;
-                                if (response.data.success) {
-                                    if (typeof response.data.result !== 'undefined') {
-                                      scope.hasData = true;
-                                      if (scope.details.month === scope.details.currentMonth - 1 ){
-                                        scope.showButton = !(response.data.result.status === 'APPROVED');
-                                      }
+                        DtrManagement.getEditableDtr({
+                            username: 'cemanalo',
+                            month: String(scope.details.month),
+                            year: String(scope.details.year)
+                        }).then((response) => {
+                          scope.showButton = false;
 
-                                      scope.details.days = Calendar.getDays(scope.details.year, scope.details.month);
-                                      scope.details.dtr = response.data.result.changes;
-                                      scope.details = Calendar.formatApprovedDtr(scope.details);
+                            if (response.data.success && response.data.result) {
+                              
+                                var result = response.data.result;
+                                console.log(response.data.result);
+                                scope.currentDtr  = true;
+                                scope.hasData = true;
+                                scope.showButton = true;
 
-                                      scope.oldDtr.days = Calendar.getDays(scope.details.year, scope.details.month);
-                                      scope.oldDtr.year = scope.details.year;
-                                      scope.oldDtr.month = scope.details.month;
-                                      scope.oldDtr.dtr = response.data.result.dates;
-                                      scope.oldDtr = Calendar.formatDtr(scope.oldDtr);
-
-
-                                    } else {
-                                        scope.hasData = false;
-                                    }
-                                }
-                            });
-                        }
+                                scope.details.days = Calendar.getDays(scope.details.year, scope.details.month);
+                                scope.details.dtr = result.convertedDates;
+                                scope.details = Calendar.formatDtr(scope.details);
+                                scope.details.totalWorkHours = Calendar.getHoursDisplay(result.total_work_hours);
+                                scope.details.totalLwopHours = Calendar.getHoursDisplay(result.total_late + result.total_undertime);
+                                scope.details.lateCount = result.late_count;
+                                scope.details.undertimeCount = result.undertime_count;
+                            } else {
+                               scope.hasData = false;
+                           }
+                        });
                         scope.$apply();
                     });
                 }

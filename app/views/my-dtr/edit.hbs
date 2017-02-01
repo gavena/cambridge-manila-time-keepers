@@ -30,15 +30,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(ind, datum) in form.attributes.data">
+                            <tr ng-repeat="(ind, datum) in form.attributes.data"  ng-if="$index > 0">
 
                                 <td data-label="Day">
                                     <% datum.day %>
                                 </td>
 
                                 <td data-label="Arrival">
+                                    <!-- <input type="time" ng-model="datum.arrival" max-time="datum.departure" name="arrival" placeholder="eg. 10:00"> -->
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label class="attribute-header">Arrival Time</label>
+                                        
                                         <input type="time" ng-model="datum.arrival" max-time="datum.departure" name="arrival" placeholder="eg. 10:00">
                                         <div ng-messages="datum.arrival.$error" role="alert">
                                             <div ng-message="time">Arrival Time is invalid.</div>
@@ -47,13 +48,14 @@
                                 </td>
 
                                 <td data-label="Departure">
-                                    <md-input-container class="md-block" flex-gt-sm>
-                                        <label class="attribute-header">Departure Time</label>
+                                    <input type="time" ng-model="datum.departure" min-time="datum.arrival" name="departure" placeholder="eg. 10:00">
+                                    <!-- <md-input-container class="md-block" flex-gt-sm>
+                                        
                                         <input type="time" ng-model="datum.departure" min-time="datum.arrival" name="departure" placeholder="eg. 10:00">
                                         <div ng-messages="datum.departure.$error" role="alert">
                                             <div ng-message="time">Departure Time is invalid.</div>
                                         </div>
-                                    </md-input-container>
+                                    </md-input-container> -->
                                 </td>
 
                                 <td data-label="Hours">
@@ -65,28 +67,35 @@
                                 </td>
 
                                 <td data-label="Leave">
-                                    <md-input-container class="md-block" flex-gt-sm>
+                            <!--         <md-select ng-model="datum.leave">
+                                        <md-option ng-repeat="leave in leaveTypes" ng-value="leave">
+                                            <% leave %>
+                                        </md-option>
+                                    </md-select> -->
+                           <!--          <md-input-container class="md-block" flex-gt-sm>
                                         <label class="attribute-header">Leave Type</label>
                                         <md-select ng-model="datum.leave">
                                             <md-option ng-repeat="leave in leaveTypes" ng-value="leave">
                                                 <% leave %>
                                             </md-option>
                                         </md-select>
-                                    </md-input-container>
+                                    </md-input-container> -->
                                 </td>
 
                                 <td data-label="Quantity">
-                                    <md-input-container class="md-block" flex-gt-sm>
-                                        <label class="attribute-header">Qunatity</label>
+                                    <input ng-model="datum.quantity" type="number" step="0.5" max="1" min="0" ng-required="datum.leave" ng-disabled="datum.leave === ''">
+                              <!--       <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="attribute-header">Quantity</label>
                                         <input ng-model="datum.quantity" type="number" step="0.5" max="1" min="0" ng-required="datum.leave" ng-disabled="datum.leave === ''">
-                                    </md-input-container>
+                                    </md-input-container> -->
                                 </td>
 
                                 <td data-label="Remarks">
-                                    <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text" ng-model="datum.remarks" name="remarks">
+                                  <!--   <md-input-container class="md-block" flex-gt-sm>
                                         <label class="attribute-header">Remarks</label>
                                         <input type="text" ng-model="datum.remarks" name="remarks">
-                                    </md-input-container>
+                                    </md-input-container> -->
                                 </td>
 
                             </tr>
