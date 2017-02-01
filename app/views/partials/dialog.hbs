@@ -1,0 +1,13 @@
+<md-dialog aria-label="{{label}}" id="{{name}}" class="{{name}}">
+    <form method="post" action="{{actionUrl}}">
+        <md-dialog-content class="md-padding">
+            <p><b>Confirmation</b></p>
+            <p class="confirmation-subheader">{{message}}</p>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" id="dialogActions_{{name}}">
+            <input type="hidden" value="<% id %>" name="id" />
+            <md-button ng-click="cancel()" class="md-raised custom-button">Cancel</md-button>
+            <md-button class="md-raised custom-button-primary" type="submit">{{action}}</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

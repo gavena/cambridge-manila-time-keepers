@@ -1,0 +1,40 @@
+
+        <div ng-controller="ScheduleController" class="md-padding site-content">
+          <div layout="row" ng-init="schedule='586f0c27209ec02b9460e17f';notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="ScheduleController" layout-align="center center" layout-wrap>
+
+
+            <div class="md-padding">
+
+                <div ng-if="hasSchedules">
+                    <table id="schedule-table">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="column in columns">
+                                    <% column %>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="schedule in schedules | orderBy: 'name'">
+                            <td data-label="Name">
+                                <% schedule.name %>
+                            </td>
+                            <td data-label="Description">
+                                <% schedule.description %>
+                            </td>
+                            <td data-label="Created By">
+                                <% schedule.type %>
+                            </td>
+                            <td data-label="Created By">
+                                <% schedule.created_by %>
+                            </td>
+                            <td data-label="Action">
+                                <md-button class="md-raised custom-button-primary" aria-label="View Schedule" btn-view-schedule-action schedule-id="<% schedule._id %>">View</md-button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div ng-if="!hasSchedules">
+                    No data available
+                </div>
+            </div>
+        </div>

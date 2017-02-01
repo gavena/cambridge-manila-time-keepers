@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="AngularMaterial">
+
+{{>head}}
+
+<body ng-cloak>
+    {{>toolbar}}
+
+    <md-content>
+        <div ng-init="id='{{id}}'" ng-controller="EditScheduleController" class="md-padding site-content">
+            <div style="margin-top: 3em;">
+                <h2 class="md-toolbar-item md-breadcrumb md-subhead">
+                    {{#each breadcrumbs}}
+                        <span class="md-breadcrumb-page" btn-redirect-action url="{{this.url}}">{{this.name}}</span>
+                        <md-icon aria-hidden="true" md-svg-src="/images/svg/right.svg" style="margin-top: -2px"></md-icon>
+                    {{/each}}
+                    <span class="md-breadcrumb-current"><% name %></span>
+                </h2>
+            </div>
+            <div layout-align="center">
+                <form name="editScheduleForm" class="edit-schedule-form md-padding">
+                    <h2><% name %></h2>
+                    <div class="form-actions" style="margin-top: -3em;">
+                        <md-button class="md-raised custom-button" btn-cancel-edit-schedule-action schedule-id="<% id %>">Cancel</md-button>
+                        <md-button class="md-raised custom-button-primary" btn-save-schedule-action ng-disabled="editScheduleForm.$invalid" schedule-id="<% id %>">Save</md-button>
+                    </div>
+
+                    <div class="error-box" ng-show="existing">
+                        <% message %>
+                    </div>
+
+                    <div layout-gt-sm="column">
+                        <div layout-gt-sm="row" style="width: 50em">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="attribute-header">Type</label>
+                                <input type="text" ng-model="form.type" name="type" readonly>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <md-checkbox ng-model="form.exclude_weekends" aria-label="Exclude Weekends">
+                                    Exclude Weekends
+                                </md-checkbox>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm style="margin-right: 2em;">
+                                <label class="attribute-header">Name</label>
+                                <input type="text" ng-model="form.name" name="name" required>
+                                <div ng-show="form.$submitted || form.uName.$touched">
+                                    <div ng-show="form.uName.$error.required">Tell us your name.</div>
+                                </div>
+                                <div ng-messages="editScheduleForm.name.$error" role="alert">
+                                    <div ng-message="required">Name is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="attribute-header">Description</label>
+                                <input type="text" ng-model="form.description" name="description" required>
+                                <div ng-messages="editScheduleForm.description.$error" role="alert">
+                                    <div ng-message="required">Description is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="column" ng-if="form.type === 'Weekly'" ng-include src="'/weekly-table'"></div>
+                        <div layout-gt-sm="column" ng-if="form.type === 'Monthly'" ng-include src="'/monthly-table'"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <md-button class="md-raised custom-button" btn-cancel-edit-schedule-action schedule-id="<% id %>">Cancel</md-button>
+                        <md-button class="md-raised custom-button-primary" btn-save-schedule-action ng-disabled="editScheduleForm.$invalid" schedule-id="<% id %>">Save</md-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {{>footer}}
+    </md-content>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<div ng-repeat="(ind, days) in form.attributes.data">
+    <h2 align="center"><% monthLabels[days.month - 1] %> <% days.year %></h2>
+    <table align="center" id="monthly-table">
+        <thead>
+            <tr>
+                <th ng-repeat="column in monthlyColumns">
+                    <% column %>
+                </th>
+            </tr>
+        </thead>
+        <tr ng-repeat="day in days.dates" ng-class="{'disabled-tr': form.exclude_weekends === true && (day.label === 'Sunday' || day.label === 'Saturday')}">
+            <td data-label="Date" style="width:10em;">
+                <input type="hidden" value="<% day.month %>" name="month">
+                <input type="hidden" value="<% day.year %>" name="year">
+                <input type="hidden" value="<% day.non_workday %>" name="non_workday">
+                <md-input-container class="md-block" flex-gt-sm ng-show="form.exclude_weekends === true && (day.label === 'Sunday' || day.label === 'Saturday')">
+                    <input value="Non-workday (<% day.label %>)" readonly aria-label="Non-workday" class="warning-data">
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm ng-hide="form.exclude_weekends === true && (day.label === 'Sunday' || day.label === 'Saturday')">
+                    <input ng-model="day.date_num" name="date_num" type="text" readonly aria-label="Date">
+                </md-input-container>
+            </td>
+            <td data-label="Day" style="width:10em;">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input ng-model="day.label" name="day" type="text" readonly aria-label="Day">
+                </md-input-container>
+            </td>
+            <td data-label="Shift Start" style="width:10em;">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label class="attribute-header">Shift Start</label>
+                    <input type="time" ng-model="day.start" name="start" readonly placeholder="eg. 10:00">
+                    <div ng-messages="createScheduleForm.start.$error" role="alert">
+                        <div ng-message="time">Shift Start is invalid.</div>
+                    </div>
+                </md-input-container>
+            </td>
+            <td data-label="Shift End" style="width:10em;">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label class="attribute-header">Shift End</label>
+                    <input type="time" ng-model="day.end" name="end" readonly placeholder="eg. 18:00">
+                    <div ng-messages="createScheduleForm.end.$error" role="alert">
+                        <div ng-message="time">Shift End is invalid.</div>
+                    </div>
+                </md-input-container>
+            </td>
+            <td data-label="Hours Flexible" style="width: 10em;">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label class="attribute-header">Hours Flexible</label>
+                    <input type="number" min="0" ng-model="day.hours_flex" name="hours_flex" readonly>
+                </md-input-container>
+            </td>
+            <td data-label="Shift" style="width:10em;">
+                <md-input-container>
+                    <label class="attribute-header">Shift</label>
+                    <input type="text" ng-model="day.shift" name="shift" readonly>
+                </md-input-container>
+            </td>
+        </tr>
+    </table>
+</div>

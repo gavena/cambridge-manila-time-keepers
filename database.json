@@ -1,0 +1,25 @@
+{
+    "defaultEnv": {
+        "ENV": "NODE_ENV"
+    },
+    "local": {
+        "driver": "mongodb",
+        "database": "tam",
+        "host": "localhost"
+    },
+    "dev": {
+        "driver": "mongodb",
+        "database": "tam",
+        "host": "localhost"
+    },
+    "prod": {
+        "driver": "mongodb",
+        "database": "tam",
+        "host": "localhost"
+    },
+    "mongo": {
+        "driver": "mongodb",
+        "database": "tam",
+        "host": "localhost"
+    }
+}

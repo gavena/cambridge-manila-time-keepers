@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="AngularMaterial">
+
+{{>head}}
+
+<body ng-cloak>
+    {{>toolbar}}
+
+    <md-content>
+        <div ng-init="id='{{id}}';notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="ViewScheduleController" class="md-padding site-content">
+            <div style="margin-top: 3em;">
+                <h2 class="md-toolbar-item md-breadcrumb md-subhead">
+                    {{#each breadcrumbs}}
+                        <span class="md-breadcrumb-page" btn-redirect-action url="{{this.url}}">{{this.name}}</span>
+                        <md-icon aria-hidden="true" md-svg-src="/images/svg/right.svg" style="margin-top: -2px"></md-icon>
+                    {{/each}}
+                    <span class="md-breadcrumb-current"><% form.name %></span>
+                </h2>
+            </div>
+            <div class="md-padding">
+                <h2><% form.name %></h2>
+                <md-button class="md-fab md-fab-top-right custom-button-primary create-view-button" btn-create-schedule-page-action aria-label="Create Custom Schedule button">
+                    <md-icon md-svg-src="/images/svg/add.svg" aria-label="menu"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-fab-top-right custom-button-primary edit-view-button" aria-label="Edit Schedule button" btn-edit-schedule-action schedule-id="<% id %>">
+                    <md-icon md-svg-src="/images/svg/edit.svg" aria-label="menu"></md-icon>
+                </md-button>
+
+                <div layout-gt-sm="column">
+                    <div layout-gt-sm="row" class="schedule-details">
+                        <p flex="10">Exclude Weekends</p>
+                        <p ng-if="form.exclude_weekends">Yes</p>
+                        <p ng-if="!form.exclude_weekends">No</p>
+                    </div>
+                    <div layout-gt-sm="row" class="schedule-details">
+                        <p flex="10">Type</p>
+                        <p>
+                            <%form.type%>
+                        </p>
+                    </div>
+                    <div layout-gt-sm="row" class="schedule-details">
+                        <p flex="10">Name</p>
+                        <p>
+                            <%form.name%>
+                        </p>
+                    </div>
+                    <div layout-gt-sm="row" class="schedule-details">
+                        <p flex="10">Description</p>
+                        <p>
+                            <%form.description%>
+                        </p>
+                    </div>
+                    <div layout-gt-sm="row" class="schedule-details">
+                        <p flex="10">Schedule Details</p>
+                    </div>
+                    <div layout-gt-sm="column" ng-if="form.type === 'Weekly'" ng-include src="'/view-weekly-table'"></div>
+                    <div layout-gt-sm="column" ng-if="form.type === 'Monthly'" ng-include src="'/view-monthly-table'"></div>
+                </div>
+            </div>
+        </div>
+
+        {{>footer}}
+    </md-content>
+</body>
+
+</html>

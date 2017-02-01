@@ -1,0 +1,45 @@
+<md-dialog aria-label="Edit Shift dialog" id="edit-shift-dialog" class="edit-shift-dialog">
+    <p><b>Confirmation</b></p>
+    <form name="editShiftForm">
+        <md-dialog-content class="md-padding">
+            <div layout-gt-sm="column">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Name</label>
+                    <input type="text" ng-model="shift.name" required>
+                    <div ng-messages="editShiftForm.name.$error" role="alert" ng-if="editShiftForm.name.$touched">
+                        <div ng-message="required">Name is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Description</label>
+                    <input type="text" ng-model="shift.description" required>
+                    <div ng-messages="editShiftForm.description.$error" role="alert" ng-if="editShiftForm.description.$touched">
+                        <div ng-message="required">Description is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Shift Start</label>
+                    <input type="time" ng-model="shift.shiftStart" required>
+                    <div ng-messages="editShiftForm.shiftStart.$error" role="alert" ng-if="editShiftForm.shiftStart.$touched">
+                        <div ng-message="required">Shift Start is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Shift End</label>
+                    <input type="time" ng-model="shift.shiftEnd" required>
+                    <div ng-messages="editShiftForm.shiftEnd.$error" role="alert" ng-if="editShiftForm.shiftEnd.$touched">
+                        <div ng-message="required">Shift End is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Flexi</label>
+                    <input type="number" ng-model="shift.flexi">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" id="dialogActions_edit-shift-dialog">
+            <md-button ng-click="cancel()" class="md-raised">Cancel</md-button>
+            <md-button type="submit" ng-disabled="editShiftForm.$invalid" class="md-raised md-primary">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

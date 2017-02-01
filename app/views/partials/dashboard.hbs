@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="AngularMaterial">
+
+{{>head}}
+
+<body ng-cloak>
+    {{>toolbar}}
+
+    <md-content>
+        <div id="dashboard" ng-controller="{{controller}}" ng-init="usertype='{{employeeDetails.usertype}}';page='{{page}}'" class="md-padding site-content">
+            <div style="margin-top: 3em;">
+                <h2 class="md-toolbar-item md-breadcrumb md-subhead">
+                    {{#each breadcrumbs}}
+                        <span ng-if="page !== 'Home'" class="md-breadcrumb-page" btn-redirect-action url="{{this.url}}">{{this.name}}</span>
+                        <md-icon ng-if="page !== 'Home'" aria-hidden="true" md-svg-src="/images/svg/right.svg" style="margin-top: -2px"></md-icon>
+                    {{/each}}
+                    <span class="md-breadcrumb-current">{{page}}</span>
+                </h2>
+            </div>
+
+            <md-list layout layout-align="center center">
+                <md-list-item ng-repeat="link in links" class="dashboard-menu">
+                    <a class="md-button md-ink-ripple" href="" btn-redirect-action url="<% link.url %>">
+                        <img src="<% link.icon %>" class="dashboard-image scale"></img><br />
+                        <span><% link.name %></span>
+                    </a>
+                </md-list-item>
+            </md-list>
+        </div>
+
+        {{>footer}}
+    </md-content>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+
+
+<div ng-init="usertype='{{employeeDetails.usertype}}'" ng-controller="ToolbarController" layout="column" style="height: 500px;" ng-cloak="" layout="vertical" layout-fill>
+    <md-toolbar class="site-toolbar" layout="row" layout-align="center center">
+        <div class="md-toolbar-tools">
+            <md-button ng-click="toggleLeft()" aria-label="Menu" style="min-width: 1%;">
+                <md-icon md-svg-icon="/images/svg/menu.svg" md-menu-align-target></md-icon>
+            </md-button>
+            <h2>
+              <span btn-redirect-action url="/home">Time and Attendance Management</span>
+            </h2>
+            <span flex></span>
+            <md-menu>
+                <md-button aria-label="Employee" ng-click="openMenu($mdOpenMenu, $event)">
+                    {{usernameloginfortoolbar}}
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button btn-redirect-action url="/employee/{{usernameloginfortoolbar}}">
+                            Profile
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button btn-redirect-action url="/logout">
+                            Logout
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </md-toolbar>
+
+    <md-sidenav class="md-sidenav-left site-sidenav" md-component-id="left" md-disable-backdrop="true" md-whiteframe="4">
+        <md-list ng-repeat="link in links">
+            <md-list-item ng-if="link.children === null">
+                <md-button aria-label="<% link.name %>" btn-redirect-action url="<% link.url %>" class="sidenav-menu">
+                    <% link.name %>
+                </md-button>
+            </md-list-item>
+            <md-list-item ng-if="link.children !== null">
+                <md-list>
+                    <md-list-item>
+                        <md-button aria-label="<% link.name %>" class="sidenav-menu">
+                            <% link.name %>
+                        </md-button>
+                    </md-list-item>
+                    <md-list-item ng-repeat="child in link.children">
+                        <md-button aria-label="<% child.name %>" url="<% child.url %>" btn-redirect-action class="sidenav-menu-child">
+                            <% child.name %>
+                        </md-button>
+                    </md-list-item>
+                </md-list>
+            </md-list-item>
+        </md-list>
+    </md-sidenav>

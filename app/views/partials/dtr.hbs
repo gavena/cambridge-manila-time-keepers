@@ -1,0 +1,82 @@
+
+  <div layout="row"  ng-init="notify='{{notify}}';message='{{message}}';success='{{success}}'" layout-align="center center" layout-wrap  ng-controller="EmployeeDtrController" >
+  <div flex="10"></div>
+      <div flex="80" align="center">
+        <h4 class="md-subhead" >
+          <span > <% details.description %> </span>
+          <br>
+          <span style="font-size:14px" > ( Status : <% details.status %> ) </span>
+        </h4>
+
+        <md-divider ng-if="!details.isApproved" ></md-divider>
+        <table id="my-dtr" style="margin-top:10px; margin-bottom:20px" ng-if="hasData">
+          <thead >
+            <tr>
+              <th style="font-size:14px"  ng-repeat="column in columns">
+                  <% column %>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="(ind, datum) in form.attributes.data">
+              <td data-label="Day"> <% datum.day %> </td>
+              <td data-label="Arrival" ng-class="datum.arrival !== oldDtr.dtr[ind].arrival  ?  'has-changes': ''">
+                <md-input-container class="md-block" flex-gt-sm >
+                  <label class="attribute-header">Arrival Time</label>
+                  <input type="time"  ng-model="datum.arrival" name="arrival" readonly placeholder="eg. 10:00"   >
+                  <md-tooltip ng-if="datum.arrival !== oldDtr.dtr[ind].arrival && oldDtr.dtr[ind].arrival !== '' ">
+                   <% oldDtr.dtr[ind].arrival.getHours() + " : " + (oldDtr.dtr[ind].arrival.getMinutes() > 10 ? oldDtr.dtr[ind].arrival.getMinutes() : '0' + oldDtr.dtr[ind].arrival.getMinutes()) + (oldDtr.dtr[ind].arrival.getHours() < 12 ? ' AM' : ' PM' ) %>
+                  </md-tooltip>
+                </md-input-container>
+              </td>
+              <td data-label="Departure"  ng-class="datum.departure !== oldDtr.dtr[ind].departure ?  'has-changes': ''">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label class="attribute-header">Departure Time</label>
+                  <input type="time"  ng-model="datum.departure" name="departure" readonly placeholder="eg. 10:00" >
+                  <md-tooltip ng-if="datum.departure !== oldDtr.dtr[ind].departure  && oldDtr.dtr[ind].departure !== '' ">
+                    <% datum.departure.length + oldDtr.dtr[ind].departure.getHours() + " : " + (oldDtr.dtr[ind].departure.getMinutes() > 10 ? oldDtr.dtr[ind].departure.getMinutes() : '0' + oldDtr.dtr[ind].departure.getMinutes()) + (oldDtr.dtr[ind].departure.getHours() < 12 ? ' AM' : ' PM' ) %>
+                  </md-tooltip>
+                </md-input-container>
+               </td>
+              <td data-label="Hours"> <% datum.hours %> </td>
+              <td data-label="Minutes"> <% datum.minutes %> </td>
+              <td data-label="Leave" ng-class="datum.leave !== '' ?  'has-changes': ''">
+                  <% datum.leave %>
+              </td>
+              <td data-label="Quantity" ng-class="datum.quantity !== '' ? 'has-changes' : ''" >
+                  <% datum.quantity %>
+              </td>
+              <td data-label="Remarks" ng-class="datum.remarks !== '' ?   'has-changes' : '' ">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label class="attribute-header">Remarks</label>
+                  <input type="text" ng-model="datum.remarks" name="remarks">
+                </md-input-container>
+               </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div ng-if="!hasData  && !details.isApproved" style="margin-top:10px; margin-bottom:20px">
+            No data available
+        </div>
+    </div>
+
+      <div flex="10"></div>
+      <div flex="80">
+          <section layout="row" layout-sm="column" layout-align="center center"  ng-if="hasData" layout-wrap>
+              <md-switch ng-disabled=true name="isCertify" ng-model="details.isCertify" aria-label="Certify" style="font-size:12px;">
+                I CERTIFY on my honor that the above is a true and correct report of the hours of work performed, record of which was made daily at the time of arrival at and departure from office.
+              </md-switch>
+          </section>
+
+          <section layout="row" layout-sm="column" layout-align="center center"  ng-if="hasData"  layout-wrap>
+            <md-button ng-disabled="!details.isCertify" class="custom-button-send md-raised"  btn-approve-dtr-action>
+                Approve
+            </md-button>
+            <md-button ng-disabled="details.isReturned" class="custom-button-negate md-raised"  btn-return-dtr-action>
+                Return
+            </md-button>
+          </section>
+      </div>
+      <div flex="10"></div>
+    </div>

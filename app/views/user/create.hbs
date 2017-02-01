@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app="AngularMaterial">
+
+{{>head}}
+
+<body ng-cloak>
+    {{>toolbar}}
+    <md-content>
+        <div ng-controller="CreateUserController" class="md-padding site-content">
+            <div style="margin-top: 3em;">
+                <h2 class="md-toolbar-item md-breadcrumb md-subhead">
+                    {{#each breadcrumbs}}
+                        <span class="md-breadcrumb-page" btn-redirect-action url="{{this.url}}">{{this.name}}</span>
+                        <md-icon aria-hidden="true" md-svg-src="/images/svg/right.svg" style="margin-top: -2px"></md-icon>
+                    {{/each}}
+                    <span class="md-breadcrumb-current">{{page}}</span>
+                </h2>
+            </div>
+            <div layout-align="center">
+                <form name="" class="create-user-form md-padding">
+                    <h2>Create User</h2>
+                    <div class="form-actions" style="margin-top: -3em;">
+                        <md-button class="md-raised custom-button" btn-cancel-create-user-action>Cancel</md-button>
+                        <md-button ng-disabled="createUserForm.$invalid" class="md-raised custom-button-primary" btn-create-user-action>Create</md-button>
+                    </div>
+
+                    <div class="error-box" ng-show="existing">
+                        <% message %>
+                    </div>
+
+                    <div layout-gt-sm="column">
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm style="margin-right: 2em;">
+                                <label class="attribute-header">First Name</label>
+                                <input type="text" ng-model="form.firstName" name="firstName" required>
+                                <div ng-messages="createUserForm.firstName.$error" role="alert">
+                                    <div ng-message="required">First Name is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm style="margin-right: 2em;">
+                                <label class="attribute-header">Middle Name</label>
+                                <input type="text" ng-model="form.middleName" name="middleName" required>
+                                <div ng-messages="createUserForm.middleName.$error" role="alert">
+                                    <div ng-message="required">Middle Name is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="attribute-header">Last Name</label>
+                                <input type="text" ng-model="form.lastName" name="lastName" required>
+                                <div ng-messages="createUserForm.lastName.$error" role="alert">
+                                    <div ng-message="required">Last Name is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div layout-gt-sm="column">
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm style="margin-right: 2em;">
+                                <label class="attribute-header">Username/Email Address</label>
+                                <input type="email" ng-model="form.username" name="username" required>
+                                <div ng-messages="createUserForm.username.$error" role="alert">
+                                    <div ng-message="required">Username/Email is required.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="attribute-header">Workday ID</label>
+                                <input type="text" ng-model="form.workday_id" name="workday_id" required>
+                                <div ng-messages="createUserForm.workday_id.$error" role="alert">
+                                    <div ng-message="required">Workday ID is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div layout-gt-sm="column">
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm style="margin-right: 2em;">
+                              <label class="attribute-header">User Group</label>
+                              <md-select ng-model="createUserForm.usertype" name="usertype" required>
+                                  <md-option ng-repeat="usertype in usertypes" ng-value="usertype.type" select-usertype-action  usergroup="<% usertype.type %>" >
+                                      <% usertype.description %>
+                                  </md-option>
+                              </md-select>
+                              <div ng-messages="createUserForm.usertype.$error" role="alert">
+                                  <div ng-message="required">User group is required.</div>
+                              </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="attribute-header">Department</label>
+                                <md-select ng-model="createUserForm.department" name="department" required>
+                                    <md-option ng-repeat="department in departments" ng-value="department" select-department-action>
+                                        <% department %>
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="createUserForm.department.$error" role="alert">
+                                    <div ng-message="required">Department is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div layout-gt-sm="column">
+                        <div layout-gt-sm="row">
+                            <md-autocomplete class="md-block" flex-gt-sm required md-input-name="lm_username" md-no-cache="noCache" md-selected-item="selectedItem" md-search-textchange="searchTextChange(searchText)" md-search-text="searchText" md-selected-item-change="selectedItemChange(item)"
+                                md-items="item in querySearch(searchText)" md-item-text="item.display" md-min-length="0" md-require-match md-floating-label="Manager" ng-model="createUserForm.lm_username" style="margin-right: 2em;">
+                                <md-item-template select-user-action>
+                                    <span md-highlight-text="searchText" bind-html-compile="item.display" select-user-action username="<% item.username %>"></span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No users matching "<% searchText %>" were found.
+                                </md-not-found>
+                                <div ng-messages="createUserForm.lm_username.$error" ng-if="createUserForm.lm_username.$touched">
+                                    <div ng-message="required">Manager is required.</div>
+                                    <div ng-message="md-require-match">Manager is required.</div>
+                                </div>
+                            </md-autocomplete>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="attribute-header">Position</label>
+                                <md-select ng-model="createUserForm.position" name="position" required>
+                                    <md-option ng-repeat="position in positions" ng-value="position" select-position-action>
+                                        <% position %>
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="createUserForm.position.$error" role="alert">
+                                    <div ng-message="required">Position is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <md-button class="md-raised custom-button" btn-cancel-create-user-action>Cancel</md-button>
+                        <md-button ng-disabled="createUserForm.$invalid" class="md-raised custom-button-primary" btn-create-user-action>Create</md-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {{>footer}}
+    </md-content>
+</body>
+
+</html>

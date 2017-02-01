@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html ng-app="AngularMaterial">
+
+{{>head}}
+
+<body>
+    <div ng-cloak layout-fill>
+        {{>toolbar}}
+        <md-content>
+            <div layout="row" ng-init="username='{{usernamelogin}}';notify='{{notify}}';message='{{message}}';success='{{success}}'" layout-align="center center" layout-wrap ng-controller="DtrManagementController" class="md-padding site-content">
+                <md-button class="md-fab md-fab-top-right custom-button-primary" ng-if="showButton" ng-disabled="details.isSubmitted" style="margin-top: 5em;" btn-edit-dtr-action aria-label="Edit DTR">
+                    <md-icon md-svg-src="/images/svg/edit.svg" aria-label="menu"></md-icon>
+                </md-button>
+
+                <div flex="10"></div>
+                <div flex="80" align="center">
+                    <h2 class="module-header"> Daily Time Record Management </h2>
+                    <h4 class="md-subhead" style="margin-left: 60px">
+                        <md-button class="custom-button-send md-raised" style="margin-left: 10px" btn-previous-dtr>
+                            Previous
+                        </md-button>
+
+                        <span style="margin-left: 10px"> <% details.description %> </span>
+
+                        <md-button style="margin-left: 60px"class="custom-button-send md-raised" btn-next-dtr>
+                            Next
+                        </md-button>
+                    </h4>
+
+                    <md-divider></md-divider>
+                        <table id="my-dtr-summary" style="margin-top:10px; margin-bottom:20px" ng-if="hasData">
+                            <thead>
+                                <tr>
+                                    <th style="font-size:14px" colspan="2">
+                                        Summary
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="details.totalWorkHours">
+                                    <td>Total Working Hours</td>
+                                    <td><% details.totalWorkHours %></td>
+                                </tr>
+                                <tr ng-if="details.totalLwopHours">
+                                    <td>Total LWOP Hours</td>
+                                    <td><% details.totalLwopHours %></td>
+                                </tr>
+                                <tr ng-if="details.lateCount">
+                                    <td>Total Late Count</td>
+                                    <td><% details.lateCount %></td>
+                                </tr>
+                                <tr ng-if="details.undertimeCount">
+                                    <td>Total Undertime Count</td>
+                                    <td><% details.undertimeCount %></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    <md-divider></md-divider>
+                    <table id="my-dtr" style="margin-top:10px; margin-bottom:20px" ng-if="hasData">
+                        <thead>
+                            <tr>
+                                <th style="font-size:14px" ng-repeat="column in columns">
+                                    <% column %>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(ind, record) in details.dtr" ng-if="$index > 0">
+                                <td data-label="Day">
+                                    <% record.day %>
+                                </td>
+                                <td data-label="Arrival" ng-class="has-changes">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="attribute-header">Arrival Time</label>
+                                        <input type="time" ng-model="record.arrival" name="arrival" readonly placeholder="eg. 10:00">
+                                    </md-input-container>
+                                </td>
+                                <td data-label="Departure" ng-class="has-changes">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="attribute-header">Departure Time</label>
+                                        <input type="time" ng-model="record.departure" name="departure" readonly placeholder="eg. 10:00">
+                                    </md-input-container>
+                                </td>
+                                <td data-label="Hours">
+                                    <% record.hours %>
+                                </td>
+                                <td data-label="Minutes">
+                                    <% record.minutes %>
+                                </td>
+                                <td data-label="Leave" ng-class="record.leave !== '' ?  'has-changes': ''">
+                                    <% record.leave %>
+                                </td>
+                                <td data-label="Quantity" ng-class="record.quantity !== '' ? 'has-changes' : ''">
+                                    <% record.quantity %>
+                                </td>
+                                <td data-label="Remarks" ng-class="record.remarks !== '' ?   'has-changes' : '' ">
+                                    <% record.remarks %>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="!hasData" style="margin-top:10px; margin-bottom:20px">
+                        No data available
+                    </div>
+                </div>
+
+
+                <div flex="10"></div>
+                <div flex="10"></div>
+                <div flex="80" align="center">
+                    {{!-- <section layout="row" layout-sm="column" layout-align="center center" ng-if="hasData" layout-wrap>
+                        <span ng-repeat="leave in leaveTypes" style="font-size:12px">
+                      <md-button class="md-fab md-mini" aria-label="Mini FAB">
+                        0
+                      </md-button>
+                        <% leave %>
+                    </span>
+                    </section>
+                    <section layout="row" layout-sm="column" layout-align="center center" ng-if="hasData" layout-wrap>
+                        <span ng-repeat="late in tardinessTypes" style="font-size:12px;">
+                      <md-button class="md-fab md-mini custom-button-negate"   aria-label="Mini FAB">
+                        0
+                      </md-button>
+                        <% late %>
+                    </span>
+                    </section> --}}
+                </div>
+                <div flex="10"></div>
+                <div flex="10"></div>
+                <div flex="80">
+                    <section layout="row" layout-sm="column" layout-align="center center" ng-if="hasData && showButton" layout-wrap>
+                        <md-switch ng-disabled="details.isSubmitted" name="isCertify" ng-model="details.isCertify" aria-label="Certify" style="font-size:12px;">
+                            I CERTIFY on my honor that the above is a true and correct report of the hours of work performed, record of which was made daily at the time of arrival at and departure from office.
+                        </md-switch>
+                    </section>
+
+
+                    <section layout="row" layout-sm="column" layout-align="center center" ng-if="hasData && showButton" layout-wrap>
+                        <md-button ng-disabled="details.isSubmitted" class="custom-button-send md-raised" btn-submit-dtr-management-action>
+                            Submit
+                        </md-button>
+                    </section>
+                </div>
+                <div flex="10"></div>
+            </div>
+
+            {{>footer}}
+        </md-content>
+
+        </bod>
+
+</html>

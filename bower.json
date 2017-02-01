@@ -1,0 +1,22 @@
+{
+  "name": "cambridge-manila-time-and-attendance-management",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Jamaica Frigillana"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bind-html-compile": "^1.3.0",
+    "angular-moment": "^1.0.1"
+  }
+}

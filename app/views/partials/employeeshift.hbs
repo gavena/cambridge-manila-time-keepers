@@ -1,0 +1,53 @@
+
+        <div layout="row" ng-init="shift='{{employeeDetails.shift}}';notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="ShiftController" layout-align="center center" layout-wrap>
+
+            <div class="md-padding">
+                <div ng-if="hasShifts">
+                    <table id="shift-table" style="margin-top: 3em;">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="column in columns">
+                                    <% column %>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="shift in shifts | orderBy: 'name'">
+                            <td data-label="Name">
+                                <% shift.name %>
+                            </td>
+                            <td data-label="Description">
+                                <% shift.description %>
+                            </td>
+                            <td data-label="Shift Start">
+                                <% shift.start | date: "h:mm a" %>
+                            </td>
+                            <td data-label="Shift End">
+                                <% shift.end | date: "h:mm a" %>
+                            </td>
+                            <td data-label="Hours Flexible">
+                                <% shift.hours_flex %>
+                            </td>
+                            <td data-label="Created By">
+                                <% shift.created_by %>
+                            </td>
+                            <td data-label="Action">
+                                <form name="shiftForm" class="shift-form md-padding">
+                              <md-input-container class="md-block" flex-gt-sm>
+                                  <label class="attribute-header">Shift</label>
+                                  <md-select ng-model="shiftForm.shiftd" name="shiftd" required>
+                                      <md-option ng-repeat="shiftd in shifts2" ng-value="shiftd.id" select-shift-action shiftId="<% shiftd.id %>">
+                                          <% shiftd.name %>  <%shiftd.id%>
+                                      </md-option>
+                                  </md-select>
+                                </md-input-container>
+                            </form>
+                                <md-button class="md-raised custom-button-primary" aria-label="Edit Shift" btn-edit-shift-action shift-id="<% shift._id %>">Edit</md-button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div ng-if="!hasShifts">
+                    No data available
+                </div>
+            </div>
+        </div>

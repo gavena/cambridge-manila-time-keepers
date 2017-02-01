@@ -1,0 +1,21 @@
+<md-dialog aria-label="Edit Schedule dialog" ng-controller="TeamScheduleController" id="edit-schedule-dialog" class="edit-schedule-dialog md-padding">
+    <form name="editScheduleForm">
+        <md-dialog-content>
+            <h3>Edit Schedule</h3>
+            <div layout-gt-sm="column">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Shift</label>
+                    <md-select ng-model="user.shift">
+                        <md-option ng-repeat="shift in shifts" value="<% shift.name %>">
+                            <% shift.name %>
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" id="dialogActions_edit-schedule-dialog">
+            <md-button ng-click="cancel()" class="md-raised">Cancel</md-button>
+            <md-button type="submit" ng-disabled="editScheduleForm.$invalid" class="md-raised md-primary">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

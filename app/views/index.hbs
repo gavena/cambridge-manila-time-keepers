@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="AngularMaterial">
+
+{{>head}}
+
+<body ng-cloak>
+    {{>toolbar}}
+
+    <md-content>
+
+      <div ng-controller="LoginUserController" class="md-padding site-content">
+          <div style="margin-top: 3em;">
+              <h2 class="md-toolbar-item md-breadcrumb md-subhead">
+                  {{#each breadcrumbs}}
+                      <span class="md-breadcrumb-page" btn-redirect-action url="{{this.url}}">{{this.name}}</span>
+                      <md-icon aria-hidden="true" md-svg-src="/images/svg/right.svg" style="margin-top: -2px"></md-icon>
+                  {{/each}}
+                  <span class="md-breadcrumb-current">{{page}}</span>
+              </h2>
+          </div>
+          <div layout-align="center">
+              <form name="loginUserForm" class="create-user-form md-padding">
+                  <h2>Login</h2>
+
+
+                  <div class="error-box" ng-show="existing">
+                      <% message %>
+                  </div>
+
+                  <div layout-gt-sm="column">
+                      <div layout-gt-sm="row">
+                          <md-input-container class="md-block" flex-gt-sm style="margin-right: 2em;">
+                              <label class="attribute-header">Email ID.</label>
+                              <input type="text" ng-model="form.username" name="username" required>
+                              <div ng-messages="loginUserForm.userName.$error" role="alert">
+                                  <div ng-message="required">Email ID is required.</div>
+                              </div>
+                          </md-input-container>
+                          <md-input-container class="md-block" flex-gt-sm style="margin-right: 2em;">
+                              <label class="attribute-header">Password</label>
+                              <input type="password" ng-model="form.password" name="password" required>
+                              <div ng-messages="loginUserForm.password.$error" role="alert">
+                                  <div ng-message="required">Password is required.</div>
+                              </div>
+                          </md-input-container>
+
+                      </div>
+                  </div>
+
+
+
+
+                  <div class="form-actions" style="margin-top: -3em;">
+                              <md-button ng-enabled="loginUserForm.$invalid" class="md-raised custom-button-primary" btn-login-user-action>Login</md-button>
+                  </div>
+              </form>
+          </div>
+      </div>
+        {{>footer}}
+    </md-content>
+</body>
+
+</html>
