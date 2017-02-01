@@ -151,7 +151,7 @@ editableDtrSchema.methods.return = function approve(data, callback) {
 
 editableDtrSchema.methods.convert = function convert(data, callback) {
   this.model('editable_dtr').findOne({
-    workday_id : data.workdayId,
+    username : data.username,
     year : data.year,
     month : data.month
   }, (error, dtr) => {
@@ -160,7 +160,7 @@ editableDtrSchema.methods.convert = function convert(data, callback) {
     }
 
     employee.findOne({
-      workday_id : data.workdayId
+      username : data.username
     }, (error, employee) => {
       if(error){
         return callback(error);
