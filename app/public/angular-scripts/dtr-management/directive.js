@@ -75,7 +75,7 @@
                         scope.details.description = Calendar.getMonthYearString(previousMonth);
 
                         DtrManagement.getEditableDtr({
-                            username: 'cemanalo',
+                            username: scope.username,
                             month: String(scope.details.month),
                             year: String(scope.details.year)
                         }).then((response) => {
@@ -123,7 +123,7 @@
                         scope.details.description = Calendar.getMonthYearString(nextMonth);
 
                         DtrManagement.getEditableDtr({
-                            username: 'cemanalo',
+                            username: scope.username,
                             month: String(scope.details.month),
                             year: String(scope.details.year)
                         }).then((response) => {
