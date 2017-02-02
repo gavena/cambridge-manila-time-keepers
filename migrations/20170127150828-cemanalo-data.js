@@ -76,7 +76,7 @@ exports.up = function(db, callback) {
 	});
 
 	db.insert('editable_dtrs', {
-	    "_id" : ObjectId("588b660b572f7122ecfafd6d"),
+	  //  "_id" : ObjectId("588b660b572f7122ecfafd6d"),
 	    "month" : "12",
 	    "workday_id" : "40001607",
 	    "year" : "2016",

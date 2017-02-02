@@ -25,7 +25,7 @@ app.use(breadcrumbs.init());
 app.use(breadcrumbs.setHome());
 app.use('/', breadcrumbs.setHome({
     name: 'Home',
-    url: '/home',
+    url: '/home', 
 }));
 
 /*app.use(expressSession({

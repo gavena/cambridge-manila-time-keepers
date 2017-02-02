@@ -561,7 +561,7 @@ exports.up = function(db, callback) {
     });
 
     db.insert('approved_dtrs', {
-        "_id": ObjectId("5809d48ece0c96790111423c"),
+      //  "_id": ObjectId("5809d48ece0c96790111423c"),
         "dtr_original_converted_id": "doc00000000002",
         "user_id": "044112",
         "username": "jgalang",
