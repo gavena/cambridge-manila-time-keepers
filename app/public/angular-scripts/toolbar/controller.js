@@ -40,7 +40,7 @@
                   }]
               }];
             }else
-          
+
             //until here
                if (newValue=='E') {
                 $scope.links = [{

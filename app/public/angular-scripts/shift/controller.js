@@ -1,14 +1,15 @@
   (() => {
       "use strict";
-      const controllers = angular.module("ShiftControllers", ["ShiftFactories", "TimeFactories"]);
+      const controllers = angular.module("ShiftControllers", ["ShiftFactories", "TimeFactories","EmployeeFactories"]);
 
       controllers.controller("ShiftController", [
           "$scope",
           "$mdDialog",
           "$mdToast",
+          "Employee",
           "Shift",
           "Time",
-          ($scope, $mdDialog, $mdToast, Shift, Time) => {
+          ($scope, $mdDialog, $mdToast,     Employee,Shift, Time) => {
               $scope.notify = true;
               $scope.hasShifts = false;
               $scope.message = "";
@@ -69,11 +70,11 @@
                   }
               });
 
-              $scope.$watch("shift", (newVal, oldVal) => {
-                  console.log("inside shiftfffffff");
+            /*  $scope.$watch("shift", (newVal, oldVal) => {
+                  console.log("inside shiftffffdddfff="+$scope.employee.shift );
                 if (newVal !== undefined) {
                   Shift.getById(newVal).then((response) => {
-                    console.log("inside shift");
+                    console.log("inside shift="+newVal);
                       if (Object.keys(response.data).length !== 0) {
                           response.data.forEach((shift) => {
                               $scope.shifts.push(shift);
@@ -86,7 +87,35 @@
                   });
                 }
               });
+*/
+              $scope.$watch("username", (newValue, oldValue) => {
+                  if (newValue !== undefined) {
+                      Employee.getByUsername(newValue).then((response) => {
+                          response.data.forEach((employee) => {
+                              Object.keys(employee).forEach((key) => {
+                                  $scope.employee[key] = employee[key];
+                              });
 
+
+                              Shift.getById($scope.employee.shift).then((response) => {
+                                console.log("inside shift="+$scope.employee.shift);
+                                  if (Object.keys(response.data).length !== 0) {
+                                      response.data.forEach((shift) => {
+                                          $scope.shifts.push(shift);
+                                      });
+
+                                      $scope.hasShifts = true;
+                                  } else {
+                                      $scope.hasShifts = false;
+                                  }
+                              });
+
+
+
+                          });
+                      });
+                  }
+              });
 
               $scope.$watch("allshift", (newVal, oldVal) => {
                   console.log("inside shiftfffffff");

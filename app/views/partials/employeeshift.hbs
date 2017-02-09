@@ -1,5 +1,5 @@
 
-        <div layout="row" ng-init="shift='{{employeeDetails.shift}}';notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="ShiftController" layout-align="center center" layout-wrap>
+        <div layout="row" ng-init="username='{{username}}';notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="ShiftController" layout-align="center center" layout-wrap>
 
             <div class="md-padding">
                 <div ng-if="hasShifts">
@@ -36,12 +36,12 @@
                                   <label class="attribute-header">Shift</label>
                                   <md-select ng-model="shiftForm.shiftd" name="shiftd" required>
                                       <md-option ng-repeat="shiftd in shifts2" ng-value="shiftd.id" select-shift-action shiftId="<% shiftd.id %>">
-                                          <% shiftd.name %>  <%shiftd.id%>
+                                          <% shiftd.name %>
                                       </md-option>
                                   </md-select>
                                 </md-input-container>
                             </form>
-                                <md-button class="md-raised custom-button-primary" aria-label="Edit Shift" btn-edit-shift-action shift-id="<% shift._id %>">Edit</md-button>
+                                <!--md-button class="md-raised custom-button-primary" aria-label="Edit Shift" btn-edit-shift-action shift-id="<% shift._id %>">Edit</md-button -->
                             </td>
                         </tr>
                     </table>
@@ -49,5 +49,4 @@
                 <div ng-if="!hasShifts">
                     No data available
                 </div>
-            </div>
         </div>

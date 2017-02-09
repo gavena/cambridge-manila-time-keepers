@@ -3,21 +3,25 @@
       const controllers = angular.module("EmployeeControllers",
       ["EmployeeFactories",
       "EmployeeDtrModule",
-      "ShiftFactories"]);
+      "ShiftFactories",
+      "ScheduleFactories"]);
 
       controllers.controller("EmployeeController", [
         "$scope",
         "$mdDialog",
         "Employee",
         "Shift",
+        "Schedule",
         "$mdToast", (
           $scope,
           $mdDialog,
           Employee,
           Shift,
+          Schedule,
           $mdToast
         ) => {
           $scope.shifts2 = [];
+          $scope.schedules2 = [];
           $scope.employee = {
               "_id": "",
               "employee_id": "",
@@ -101,6 +105,21 @@
 
               }
           });
+
+          Schedule.allSchedules().then((response) => {
+          if (Object.keys(response.data).length !== 0) {
+              response.data.forEach((schedules) => {
+                 $scope.schedules2.push({
+                     "id": schedules._id,
+                     "name": schedules.name
+                 });
+              });
+
+              $scope.hasSchedules = true;
+          } else {
+              $scope.hasSchedules = false;
+          }
+      });
 
 
       }]);

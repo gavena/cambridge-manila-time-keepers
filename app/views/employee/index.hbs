@@ -5,7 +5,7 @@
 
 <body ng-cloak>
     {{>toolbar}}
-   
+
     <md-content>
         <div id="employee" ng-init="username='{{username}}';notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="EmployeeController" class="md-padding site-content">
             <div style="margin-top: 3em;">
@@ -25,14 +25,14 @@
                 <span class="md-subheader employee-subhead">Line Manager: <% employee.line_manager %></span>
 
                 <div class="employee-tab">
-                    <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tabs md-dynamic-height md-border-bottom  >
                         <md-tab label="dtr">
                             <md-content class="md-padding">
                                   {{>dtr}}
                             </md-content>
                         </md-tab>
-                        <md-tab label="work hours">
-                            <md-content class="md-padding">
+                        <md-tab label="work hours" >
+                                <md-content class="md-padding">
                                 <h2 class="employee-tab-header">Shift</h2>
                                 <md-content class="md-padding">
                                         {{>employeeshift}}

@@ -14,6 +14,10 @@
             return employeeService.getByWorkdayID(workdayId);
         };
 
+        Employee.updateShift = (username, shiftId) => {
+            return employeeService.updateShift(username, shiftId);
+        };
+
         return Employee;
     }]);
 })();

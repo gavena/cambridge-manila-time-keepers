@@ -28,6 +28,21 @@
                 });
                 return dfd.promise;
             };
+
+
+            this.updateShift = (username, shiftId)  => {
+                const dfd = $q.defer();
+                $http({
+                    "method": "POST",
+                    "url": `/employee/shift/update/${username}/${shiftId}`
+                }).then((success) => {
+                    dfd.resolve(success);
+                        console.log("scope.form.username ddddd SUCESSS=");
+                });
+                return dfd.promise;
+            };
+
+
         }
     ]);
 })();
