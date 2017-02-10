@@ -1,5 +1,5 @@
 
-        <div ng-controller="ScheduleController" class="md-padding site-content">
+        <!--div ng-controller="ScheduleController" class="md-padding site-content"-->
           <div layout="row" ng-init="username1='{{username}}';notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="ScheduleController" layout-align="center center" layout-wrap>
 
 
@@ -33,24 +33,27 @@
                             </td>
                         </tr>
 
-                        <tr>
-                          <td data-label="Action">
-                              <form name="scheduleForm" class="schedule-form md-padding">
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label class="attribute-header">Add Schedule</label>
-                                <md-select ng-model="scheduleForm.scheduled" name="scheduled" >
-                                    <md-option ng-repeat="scheduled in schedules2" ng-value="scheduled.id" select-schedule-action scheduleId="<% scheduled.id %>">
-                                        <% scheduled.name %>
-                                    </md-option>
-                                </md-select>
-                              </md-input-container>
-                          </form>
-                              <!--md-button class="md-raised custom-button-primary" aria-label="Edit Shift" btn-edit-shift-action shift-id="<% shift._id %>">Edit</md-button -->
-                          </td>
-                        </tr>
+
                     </table>
 
                 </div>
+                <table>
+                  <tr>
+                    <td data-label="Action">
+                        <form name="scheduleForm" class="schedule-form md-padding">
+                      <md-input-container class="md-block" flex-gt-sm>
+                          <label class="attribute-header">Add Schedule</label>
+                          <md-select ng-model="scheduleForm.scheduled" name="scheduled" >
+                              <md-option ng-repeat="scheduled in schedules2" ng-value="scheduled.id" select-schedule-action schedule-id="<% scheduled.id %>">
+                                  <% scheduled.name %>
+                              </md-option>
+                          </md-select>
+                        </md-input-container>
+                    </form>
+                        <!--md-button class="md-raised custom-button-primary" aria-label="Edit Shift" btn-edit-shift-action shift-id="<% shift._id %>">Edit</md-button -->
+                    </td>
+                  </tr>
+                </table>
                 <div ng-if="!hasSchedules">
                     No data available
                 </div>

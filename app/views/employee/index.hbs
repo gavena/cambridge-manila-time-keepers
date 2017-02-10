@@ -26,11 +26,7 @@
 
                 <div class="employee-tab">
                     <md-tabs md-dynamic-height md-border-bottom  >
-                        <md-tab label="dtr">
-                            <md-content class="md-padding">
-                                  {{>dtr}}
-                            </md-content>
-                        </md-tab>
+
                         <md-tab label="work hours" >
                                 <md-content class="md-padding">
                                 <h2 class="employee-tab-header">Shift</h2>
@@ -41,6 +37,11 @@
                                 <md-content class="md-padding">
                                     {{>employeeschedule}}
                                 </md-content>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="dtr">
+                            <md-content class="md-padding">
+                                  {{>dtr}}
                             </md-content>
                         </md-tab>
                     </md-tabs>

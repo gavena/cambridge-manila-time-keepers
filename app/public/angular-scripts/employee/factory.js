@@ -18,6 +18,14 @@
             return employeeService.updateShift(username, shiftId);
         };
 
+        Employee.addSchedule = (username, scheduleId) => {
+            return employeeService.addSchedule(username, scheduleId);
+        };
+
+        Employee.deleteSchedule = (username, scheduleId) => {
+            return employeeService.deleteSchedule(username, scheduleId);
+        };
+
         return Employee;
     }]);
 })();
