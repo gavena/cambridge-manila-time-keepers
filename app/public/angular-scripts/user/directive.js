@@ -11,4 +11,16 @@
             }
         };
     }]);
+
+    directives.directive("btnViewUserAction", ["$window", ($window) => {
+        return {
+            restrict: "A",
+            link: (scope, elem) => {
+                elem.click(() => {
+                    $window.location = "/user/view/" + elem.attr("user-id");
+                });
+            }
+        };
+    }]);
+
 })();

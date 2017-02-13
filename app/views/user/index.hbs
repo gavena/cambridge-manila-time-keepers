@@ -7,7 +7,7 @@
     {{>toolbar}}
 
     <md-content>
-        <div ng-init="notify='{{notify}}';message='{{message}}';success='{{success}}'" ng-controller="UserController" class="md-padding site-content">
+        <div ng-init="notify='{{notify}}';message='{{message}}';success='{{success}}';alluser='Y'" ng-controller="UserController" class="md-padding site-content">
             <div style="margin-top: 3em;">
                 <h2 class="md-toolbar-item md-breadcrumb md-subhead">
                     {{#each breadcrumbs}}
@@ -23,6 +23,40 @@
                 <md-button class="md-fab md-fab-top-right custom-button-primary create-button" btn-create-user-page-action aria-label="Create user button">
                     <md-icon md-svg-src="/images/svg/add.svg" aria-label="menu"></md-icon>
                 </md-button>
+                <div ng-if="hasUsers">
+                  <table id="user-table">
+                      <thead>
+                          <tr>
+                              <th ng-repeat="column in columns">
+                                  <% column %>
+                              </th>
+                          </tr>
+                      </thead>
+                      <tr ng-repeat="user in users | orderBy: 'last_name'">
+                          <td data-label="Workday ID">
+                              <% user.workday_id %>
+                          </td>
+                          <td data-label="First Name">
+                              <% user.first_name %>
+                          </td>
+                          <td data-label="Middle Name">
+                              <% user.middle_name %>
+                          </td>
+                          <td data-label="Last Name">
+                              <% user.last_name %>
+                          </td>
+                          <td data-label="Position">
+                              <% user.position %>
+                          </td>
+                          <td data-label="Action">
+                              <md-button class="md-raised custom-button-primary" aria-label="View User" btn-view-user-action user-id="<% user._id %>">View</md-button>
+                          </td>
+                      </tr>
+                  </table>
+                </div>
+                <div ng-if="!hasUsers">
+                    No data available
+                </div>
             </div>
         </div>
 
